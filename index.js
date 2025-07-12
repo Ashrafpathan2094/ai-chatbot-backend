@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 require("dotenv").config();
-
+const authGuard = require("./middleware/authMiddleware");
 const app = express();
 
 // Middleware
@@ -21,6 +21,9 @@ app.get("/", (req, res) => {
 
 // Use API routes
 app.use("/api/auth", authRoutes);
+
+app.use(authGuard);
+
 app.use("/api", chatRoutes);
 
 // Start server only after MongoDB is connected
